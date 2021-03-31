@@ -2,8 +2,33 @@
 
 <div id="mapId" style="width: 100%;"></div>
 
-<div id="formDialog">
-    
+<div id="formDialog" style="display: none;">
+    <div class="section">
+        <span class="section-name">Opazovana ptica:</span>
+        <ng-select2 id="birdSelector" [data]="testData" [width]="260"></ng-select2>
+    </div>
+    <div class="section">
+        <span class="section-name">Komentar:</span>
+        <input type="text" name="comment" id="observationComment" class="observation-input">
+    </div>
+    <div class="section">
+        <span class="section-name">Število osebkov:</span>
+        <input type="number" name="col" id="observationNumber" class="observation-input" value="1">
+    </div>
+    <div class="section">
+        <span class="section-name">Lokacija:</span>
+        <button class="location-btn" id="userLocationBtn" (click)="selectUsersLocation()">Uporabi trenutno lokacijo</button>
+        <button class="location-btn" id="customLocationBtn" (click)="selectCustomLocation()">Izberi na zemljevidu</button>
+    </div>
+
+    <div class="section" style="margin-top: 12px;">
+        <button class="util-btn" (click)="closeForm()">Zapri</button>
+        <button class="util-btn" (click)="addObservation()" style="float: right; background-color: rgb(36, 170, 36);">Dodaj</button>
+    </div>
 </div>
 
 <button id="addObservationBtn" (click)="showAddObservationDialog()">DODAJ OPAZOVANJE</button>
+
+<button id="selectCustomLocationBtn" (click)="completeCustomLocationSelection()" style="display: none;">Uporabi</button>
+
+<button id="cancelCustomLocationBtn" (click)="cancelCustomLocationSelection()" style="display: none;">Prekliči</button>

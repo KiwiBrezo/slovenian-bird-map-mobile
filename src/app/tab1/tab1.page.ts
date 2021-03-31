@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
 import * as Leaflet from 'leaflet';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-tab1',
@@ -12,6 +13,24 @@ export class Tab1Page implements OnInit, OnDestroy {
   userMarker: Leaflet.Marker;
   lastLat = 0.0;
   lastLon = 0.0;
+  selectedLocationLat = null;
+  selectedLocationLon = null;
+  testData = [{
+    id : -1,
+    text : "Izberi opazovano ptico"
+  },
+  {
+    id : 2,
+    text : "Pananana"
+  },
+  {
+    id : 3,
+    text : "Cuzajaja"
+  },
+  {
+    id : 4,
+    text : "Suhatala"
+  }]
 
   constructor(private geolocation: Geolocation) { }
 
@@ -59,7 +78,69 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   showAddObservationDialog() {
-    document.getElementById("addObservationBtn").style.display = "none";
+    this.resetValues();
+    $("#addObservationBtn").hide();
+    $("#formDialog").show();
+  }
+
+  closeForm() {
+    $("#addObservationBtn").show();
+    $("#formDialog").hide();
+    this.resetValues();
+  }
+
+  selectUsersLocation() {
+    this.selectedLocationLat = this.lastLat;
+    this.selectedLocationLon = this.lastLon;
+
+    $("#customLocationBtn").removeClass("active");
+    $("#userLocationBtn").addClass("active");
+  }
+
+  selectCustomLocation() {
+    this.hideFormForLocationSelection();
+    $("#customLocationBtn").addClass("active");
+    $("#userLocationBtn").removeClass("active");
+  }
+
+  addObservation() {
+    this.resetValues();
+  }
+
+  completeCustomLocationSelection() {
+
+    this.showFormAfterLocationSelction();
+  }
+
+  cancelCustomLocationSelection() {
+    this.selectedLocationLat = null;
+    this.selectedLocationLon = null;
+    $("#customLocationBtn").removeClass("active");
+    this.showFormAfterLocationSelction();
+  }
+
+  hideFormForLocationSelection() {
+    $("#formDialog").hide();
+    $("#selectCustomLocationBtn").show();
+    $("#cancelCustomLocationBtn").show();
+  }
+
+  showFormAfterLocationSelction() {
+    $("#selectCustomLocationBtn").hide();
+    $("#cancelCustomLocationBtn").hide();
+    $("#formDialog").show();
+  }
+
+  resetValues() {
+    this.selectedLocationLat = null;
+    this.selectedLocationLon = null;
+    $("#observationComment").val("");
+    $("#observationNumber").val("1");
+
+    $("#customLocationBtn").removeClass("active");
+    $("#userLocationBtn").removeClass("active");
+    $("#selectCustomLocationBtn").hide();
+    $("#cancelCustomLocationBtn").hide();
   }
 
   ngOnDestroy() {
