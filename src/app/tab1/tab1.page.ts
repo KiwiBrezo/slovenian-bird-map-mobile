@@ -1,11 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import * as $ from 'jquery';
 import { Observable } from 'rxjs';
-import { data } from 'jquery';
-import 'select2';
 import { from } from 'rxjs';
 
 @Component({
@@ -16,60 +13,36 @@ import { from } from 'rxjs';
 export class Tab1Page implements OnInit, OnDestroy {
   map: Leaflet.Map;
   userMarker: Leaflet.Marker;
+  
   lastLat = 0.0;
   lastLon = 0.0;
   selectedLocationLat = null;
   selectedLocationLon = null;
+  
   birdData = [{
     id: -1,
-    text: "Neke"
+    text: "Ni podatkov..."
   }];
-  allBirdsObservable: Observable<any>;
 
-  constructor(private geolocation: Geolocation, private http: HttpClient) { }
+  allBirdsObservable: Observable<any>;
+  allBirdsRequest = new Promise(resolve => {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        resolve(JSON.parse(this.responseText));
+      }
+    };
+    request.open("GET", "http://83.212.82.14:8080/api/mobile/getAllBirds", true);
+    request.send();
+  });
+
+  constructor(private geolocation: Geolocation) { }
 
   ngOnInit() { 
-    /*this.allBirdsObservable = this.http.get("http://83.212.82.14:8080/api/mobile/getAllBirds");
-    this.allBirdsObservable.subscribe(data => {
-      console.log(data);
-      var tmpList = [];
-      data.forEach(elemt => {
-        tmpList.push({
-          id: elemt.birdID,
-          text: elemt.name
-        });
-      });
 
-      this.birdData = tmpList;
-    }, err => {
-      console.log(err);
-    });*/
-
-    /*$.ajax({
-      method: "GET",
-      url: "http://83.212.82.14:8080/api/mobile/getAllBirds",
-    })
-    .done(function(res) {
-      console.log(res);
-      var tmpList = [];
-      res.forEach(elemt => {
-        tmpList.push({
-          id: elemt.birdID,
-          text: elemt.name
-        });
-        $("#birdSelector").append($("<option>").val(elemt.birdID).text(elemt.name));
-      });
-
-      this.birdData = tmpList;
-    });*/
-
-    this.allBirdsObservable = from($.ajax({
-      method: "GET",
-      url: "http://83.212.82.14:8080/api/mobile/getAllBirds",
-    }));
+    this.allBirdsObservable = from(this.allBirdsRequest);
 
     this.allBirdsObservable.subscribe(data => {
-      console.log(data);
       var tmpList = [];
       data.forEach(elemt => {
         tmpList.push({
