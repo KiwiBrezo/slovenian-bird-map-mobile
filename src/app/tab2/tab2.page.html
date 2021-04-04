@@ -1,11 +1,17 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
+  <div class="list">
+    <h2 class="title">Seznam opazovanih ptic:</h2>
+    <div id="list-container">
+      <div *ngFor="let item of observations" class="container">
+        <div class="bird-container-title">
+          <span>{{ item.birdName }}</span>
+          <div class="bird-container-info">
+            <ion-icon name="information-circle-outline"></ion-icon>
+          </div>
+        </div>
+        <p class="bird-container-date"> Datum opazovanja: {{ item.date }}</p>
+      </div>
+    </div>
+  </div>
   
 </ion-content>

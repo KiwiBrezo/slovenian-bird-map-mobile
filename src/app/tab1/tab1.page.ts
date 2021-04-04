@@ -94,7 +94,7 @@ export class Tab1Page implements OnInit, OnDestroy {
   }
 
   leafletMap() {
-    this.map = Leaflet.map('mapId').setView([46.119944, 15.005333], 7);
+    this.map = Leaflet.map('mapId', {attributionControl: false}).setView([46.119944, 15.005333], 7);
     this.map.invalidateSize();
     this.map.doubleClickZoom.disable(); 
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
