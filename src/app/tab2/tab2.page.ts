@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { from, Observable } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-tab2',
