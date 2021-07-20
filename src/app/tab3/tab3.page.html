@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <div class="user-container">
     <h2 class="user-name">Jan Breznar</h2>
-    <p>Število vseh opazovanj: 52</p>
-    <p>Še drugi podatki lalala...</p>
+    <p>Število vseh opazovanj: {{ userData.allTimeObservation }}</p>
+    <p>Število opazovanj tega leta: {{ userData.thisYearObservation }}</p>
   </div>
 </ion-content>
