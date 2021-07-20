@@ -13,7 +13,7 @@ export class Tab2Page implements OnInit {
   getUserObservationsRequest: Promise<any>; 
 
   constructor() {
-    var params = "userID=12&mobileToken=ab18a281-bb97-4e2d-87b5-2c3bceb08349";
+    var params = "userID=1&mobileToken=ac0a603a-8d55-4687-bae3-55199e216b6c";
     this.getUserObservationsRequest = new Promise(resolve => {
       var request = new XMLHttpRequest();
       request.onreadystatechange = function() {
@@ -21,7 +21,7 @@ export class Tab2Page implements OnInit {
           resolve(JSON.parse(this.responseText));
         }
       };
-      request.open("GET", "http://83.212.82.14:8080/api/mobile/getObservationForUser?" + params, true);
+      request.open("GET", "http://164.8.9.88:8080/slovenian-bird-map/api/mobile/getObservationForUser?" + params, true);
       request.send();
     });
   }

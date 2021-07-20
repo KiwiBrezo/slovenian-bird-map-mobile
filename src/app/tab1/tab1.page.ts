@@ -34,7 +34,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         resolve(JSON.parse(this.responseText));
       }
     };
-    request.open("GET", "http://83.212.82.14:8080/api/mobile/getAllBirds", true);
+    request.open("GET", "http://164.8.9.88:8080/slovenian-bird-map/api/mobile/getAllBirds", true);
     request.send();
   });
 
@@ -163,7 +163,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         Tab1Page.prototype.resetValues();
       }
     };
-    request.open("POST", "http://83.212.82.14:8080/api/addObservation", true);
+    request.open("POST", "http://164.8.9.88:8080/slovenian-bird-map/api/addObservation", true);
     request.send(formData);
   }
 
